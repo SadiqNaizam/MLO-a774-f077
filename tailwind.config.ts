@@ -22,11 +22,11 @@ export default {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
+				background: 'hsl(var(--background))', // Maps to PRD page background (BLUE)
+				foreground: 'hsl(var(--foreground))', // Maps to PRD primaryText (BLACK)
 				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					DEFAULT: 'hsl(var(--primary))', // Maps to PRD accentBlue (BLUE)
+					foreground: 'hsl(var(--primary-foreground))' // Maps to PRD surface (WHITE)
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -38,36 +38,35 @@ export default {
 				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
+					foreground: 'hsl(var(--muted-foreground))' // Maps to PRD secondaryText (GRAY)
 				},
 				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
+					DEFAULT: 'hsl(var(--accent))', // Maps to PRD accentBlue (BLUE)
+					foreground: 'hsl(var(--accent-foreground))' // Maps to PRD surface (WHITE)
 				},
 				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
+					DEFAULT: 'hsl(var(--popover))', // Maps to PRD surface (WHITE)
+					foreground: 'hsl(var(--popover-foreground))' // Maps to PRD primaryText (BLACK)
 				},
 				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
+					DEFAULT: 'hsl(var(--card))', // Maps to PRD surface (WHITE)
+					foreground: 'hsl(var(--card-foreground))' // Maps to PRD primaryText (BLACK)
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+        link: 'hsl(var(--link))' // Added for PRD accentLink
+				// Removed sidebar colors as they are not in the PRD
 			},
 			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
+        // --radius is set to 0.375rem (rounded-md) in index.css
+				lg: 'var(--radius)', // Becomes 0.375rem (effectively 'md' from PRD perspective)
+				md: 'calc(var(--radius) - 2px)', // Becomes smaller than PRD's 'md'
+				sm: 'calc(var(--radius) - 4px)' // Becomes even smaller
+        // This means Tailwind's rounded-lg utility will use PRD's default 'rounded-md' value.
+        // And Tailwind's rounded-md utility will use calc(0.375rem - 2px).
+        // If the intention was for Tailwind's 'md' utility to BE 'rounded-md' (0.375rem), then --radius should be used differently or radius keys remapped.
+        // Given PRD 'default: rounded-md', and Shadcn sets 'lg: var(--radius)', we set --radius to be 'rounded-md' value (0.375rem).
 			},
+      // PRD typography.primaryFont is 'sans-serif'. Tailwind's default 'sans' stack is already a sans-serif font stack.
+      // No explicit fontFamily changes needed here unless a specific font family string was provided.
 			keyframes: {
 				'accordion-down': {
 					from: {

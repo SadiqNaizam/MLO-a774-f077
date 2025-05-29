@@ -4,54 +4,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* PRD Named Colors to HSL values */
+    --prd-background-hsl: 211 100% 50%;      /* PRD background: #007BFF */
+    --prd-surface-hsl: 0 0% 100%;         /* PRD surface: #FFFFFF */
+    --prd-primary-text-hsl: 0 0% 0%;      /* PRD primaryText: #000000 */
+    --prd-secondary-text-hsl: 208 7% 47%;   /* PRD secondaryText: #6C757D */
+    --prd-accent-blue-hsl: 211 100% 50%;    /* PRD accentBlue: #007BFF */
+    --prd-accent-link-hsl: 240 100% 50%;    /* PRD accentLink: #0000FF */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Shadcn UI CSS Variables (or similar theming system) based on PRD */
+    --background: var(--prd-background-hsl);       /* Tailwind 'bg-background' will be PRD page background (BLUE) */
+    --foreground: var(--prd-primary-text-hsl);   /* Tailwind 'text-foreground' will be PRD primaryText (BLACK) */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: var(--prd-surface-hsl);              /* Card background is WHITE */
+    --card-foreground: var(--prd-primary-text-hsl); /* Text on card is BLACK */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --popover: var(--prd-surface-hsl);           /* Popover background is WHITE */
+    --popover-foreground: var(--prd-primary-text-hsl);/* Text on popover is BLACK */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --primary: var(--prd-accent-blue-hsl);       /* Primary actions (buttons) are BLUE */
+    --primary-foreground: var(--prd-surface-hsl);/* Text on primary actions is WHITE (maps to PRD surface) */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --secondary: 210 40% 96.1%;                  /* Default light gray for secondary component backgrounds */
+    --secondary-foreground: var(--prd-primary-text-hsl); /* Text on secondary components is BLACK */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;                      /* Default light gray for muted elements */
+    --muted-foreground: var(--prd-secondary-text-hsl); /* Muted text is PRD secondaryText (GRAY) */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --accent: var(--prd-accent-blue-hsl);        /* Accent color is BLUE */
+    --accent-foreground: var(--prd-surface-hsl); /* Text on accent elements is WHITE */
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;                /* Default destructive color (RED) */
+    --destructive-foreground: 210 40% 98%;       /* Text on destructive elements (LIGHT) */
 
-    --radius: 0.5rem;
+    --border: 214.3 31.8% 91.4%;                 /* Default border color (LIGHT GRAY) */
+    --input: 214.3 31.8% 91.4%;                  /* Default input field background (LIGHT GRAY) */
+    --ring: var(--prd-accent-blue-hsl);          /* Ring color for focus states is BLUE */
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.375rem;                          /* Default border radius based on PRD 'rounded-md' (0.375rem = 6px) */
 
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom variable for PRD accentLink */
+    --link: var(--prd-accent-link-hsl);
   }
 
   .dark {
+    /* Note: PRD does not specify dark mode colors. Preserving original dark mode variables. */
+    /* These may need adjustment later if a dark theme specific to the PRD is designed. */
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
@@ -79,23 +77,28 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* --radius is not typically changed in dark mode by default */
+    /* --link would also inherit or could be specified */
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border; /* Applies border color from CSS var --border */
   }
 
   body {
-    @apply bg-background text-foreground;
+    /* Default body background will be picked up by Tailwind's bg-background which uses CSS var --background */
+    /* --background is set to PRD's page background (BLUE) */
+    color: hsl(var(--foreground)); /* Default text color is PRD primaryText (BLACK) */
+    font-family: sans-serif; /* PRD typography.primaryFont */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  a {
+    color: hsl(var(--link)); /* PRD accentLink color */
+    text-decoration: underline; /* PRD link style includes underline */
+  }
+  /* Example: a:hover { text-decoration: none; } or opacity change if specified */
 }
